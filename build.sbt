@@ -67,9 +67,7 @@ lazy val commonSettings = Seq(
 lazy val root = project
   .in(file("."))
   .settings(moduleName := "stoop")
-  .aggregate(
-    core
-  )
+  .aggregate(core)
 
 lazy val core = project
   .in(file("core"))
