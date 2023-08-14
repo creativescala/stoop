@@ -39,7 +39,6 @@ lazy val scala3 = "3.3.0"
 ThisBuild / crossScalaVersions := List(scala3)
 ThisBuild / scalaVersion := crossScalaVersions.value.head
 ThisBuild / useSuperShell := false
-ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0"
 ThisBuild / semanticdbEnabled := true
 ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
 ThisBuild / tlSitePublishBranch := Some("main")
@@ -53,6 +52,7 @@ commands += Command.command("build") { state =>
     "scalafixAll" ::
     "scalafmtAll" ::
     "headerCreateAll" ::
+    "githubWorkflowGenerate" ::
     state
 }
 
