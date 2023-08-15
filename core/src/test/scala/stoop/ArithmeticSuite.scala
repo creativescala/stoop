@@ -46,4 +46,17 @@ class ArithmeticSuite extends FunSuite {
     assertSuccess(expr.parse("-1"), Integer(-1))
     assertSuccess(expr.parse("-12345"), Integer(-12345))
   }
+
+  test("addition and subtraction") {
+    assertSuccess(expr.parse("1 + 99"), Add(Integer(1), Integer(99)))
+    assertSuccess(expr.parse("10 - 32"), Sub(Integer(10), Integer(32)))
+    assertSuccess(
+      expr.parse("99 - 45 + 8"),
+      Add(Sub(Integer(99), Integer(45)), Integer(8))
+    )
+    assertSuccess(
+      expr.parse("999 + 7 - 3"),
+      Sub(Add(Integer(999), Integer(7)), Integer(3))
+    )
+  }
 }
