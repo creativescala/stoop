@@ -16,6 +16,7 @@
 
 package stoop
 
+import parsley.character
 import parsley.token.descriptions.*
 import parsley.token.predicate.Basic
 
@@ -62,7 +63,9 @@ object Lexer {
   object literal {
     val integer = lexer.lexeme.numeric.integer.decimal32
     val string = lexer.lexeme.text.string.fullUtf16
-    val boolean = lexer.lexeme.symbol("true") | lexer.lexeme.symbol("false")
+    val boolean = lexer.lexeme(character.string("true")) | lexer.lexeme(
+      character.string("false")
+    )
   }
 
   object operator {
