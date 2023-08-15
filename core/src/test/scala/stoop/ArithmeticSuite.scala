@@ -59,4 +59,15 @@ class ArithmeticSuite extends FunSuite {
       Sub(Add(Integer(999), Integer(7)), Integer(3))
     )
   }
+
+  test("operator precedence") {
+    assertSuccess(
+      expr.parse("1 + 9 * 7"),
+      Add(Integer(1), Mul(Integer(9), Integer(7)))
+    )
+    assertSuccess(
+      expr.parse("1 * 9 + 7"),
+      Add(Mul(Integer(1), Integer(9)), Integer(7))
+    )
+  }
 }
