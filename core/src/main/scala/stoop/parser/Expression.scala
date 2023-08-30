@@ -34,6 +34,7 @@ object Expression {
   sealed trait Pre3 extends Pre4
   final case class GtEq(l: Pre3, r: Pre2) extends Pre3
   final case class LtEq(l: Pre3, r: Pre2) extends Pre3
+  final case class Eq(l: Pre3, r: Pre2) extends Pre3
 
   sealed trait Pre2 extends Pre3
   final case class Add(l: Pre2, r: Pre1) extends Pre2
@@ -69,7 +70,8 @@ object Expression {
         ) :+
         SOps(InfixL)(
           operator.gtEq.as(GtEq.apply),
-          operator.ltEq.as(LtEq.apply)
+          operator.ltEq.as(LtEq.apply),
+          operator.eq.as(Eq.apply)
         ) :+
         SOps(InfixL)(
           operator.gt.as(Gt.apply),

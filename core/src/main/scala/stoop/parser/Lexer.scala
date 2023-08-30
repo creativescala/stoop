@@ -83,11 +83,13 @@ object Lexer {
     val and = lexer.lexeme.symbol("&&")
     val or = lexer.lexeme.symbol("||")
 
-    val equals = lexer.lexeme.symbol('=')
+    val eq = lexer.lexeme.symbol("==")
   }
 
   object misc {
     val openParen = lexer.lexeme.symbol.openParen
     val closeParen = lexer.lexeme.symbol.closingParen
+    val openBrace = lexer.lexeme.symbol.openBrace
+    val closeBrace = lexer.lexeme.symbol.closingBrace
   }
 }

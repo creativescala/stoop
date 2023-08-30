@@ -30,4 +30,8 @@ class ExpressionSuite extends ParserSuite {
     assertSuccess(expr.parse("1 <= 99"), LtEq(Integer(1), Integer(99)))
     assertSuccess(expr.parse("10 >= 32"), GtEq(Integer(10), Integer(32)))
   }
+
+  test("equality") {
+    assertSuccess(expr.parse("1 == 10"), Eq(Integer(1), Integer(10)))
+  }
 }
