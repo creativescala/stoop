@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package stoop
+package stoop.parser
 
 import munit.FunSuite
 import munit.Location

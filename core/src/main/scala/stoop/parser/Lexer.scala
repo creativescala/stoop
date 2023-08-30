@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package stoop
+package stoop.parser
 
 import parsley.character
 import parsley.token.descriptions.*
