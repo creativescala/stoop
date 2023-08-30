@@ -16,26 +16,8 @@
 
 package stoop.parser
 
-import munit.FunSuite
-import munit.Location
-import parsley.Result
-import parsley.Success
-
-class ArithmeticSuite extends FunSuite {
+class ArithmeticSuite extends ParserSuite {
   import Arithmetic.*
-
-  def assertSuccess[A](result: Result[?, Expr], expected: Expr)(using
-      loc: Location
-  ) =
-    result match {
-      case Success(x) =>
-        if x == expected then ()
-        else
-          fail(
-            s"Parser succeeded with unexpected result. Expected $expected but got $x"
-          )
-      case other => fail(s"Parser failed with failure $other")
-    }
 
   test("integer literals") {
     assertSuccess(expr.parse("1"), Integer(1))
