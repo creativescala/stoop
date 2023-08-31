@@ -14,29 +14,10 @@
  * limitations under the License.
  */
 
-package stoop.parser
+package stoop.parse
 
-class ConditionalSuite extends ParserSuite {
-  import Conditional.*
-
-  test("conditionals") {
-    assertSuccess(
-      expr.parse("if 1 < 2 then true else false"),
-      If(Lt(Integer(1), Integer(2)), Bool(true), Bool(false))
-    )
-    assertSuccess(
-      expr.parse("if if 3 + 2 < 4 then false else true then true else false"),
-      If(
-        If(
-          Lt(Add(Integer(3), Integer(2)), Integer(4)),
-          Bool(false),
-          Bool(true)
-        ),
-        Bool(true),
-        Bool(false)
-      )
-    )
-  }
+class ExpressionSuite extends ParserSuite {
+  import Expression.*
 
   test("boolean literals") {
     assertSuccess(expr.parse("true"), Bool(true))

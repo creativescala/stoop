@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package stoop.parser
+package stoop.parse
 
 class ArithmeticSuite extends ParserSuite {
   import Arithmetic.*

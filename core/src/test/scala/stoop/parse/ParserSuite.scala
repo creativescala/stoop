@@ -1,4 +1,4 @@
-package stoop.parser
+package stoop.parse
 
 import munit.FunSuite
 import munit.Location
