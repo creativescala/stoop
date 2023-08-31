@@ -76,7 +76,8 @@ lazy val core = project
     libraryDependencies ++= Seq(
       Dependencies.catsCore.value,
       Dependencies.catsEffect.value,
-      Dependencies.parsley
+      Dependencies.parsley,
+      Dependencies.parsleyCats
     ),
     moduleName := "stoop-core"
   )

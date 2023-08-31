@@ -28,7 +28,7 @@ object Lexer {
         identifierLetter = Basic(_.isLetterOrDigit)
       ),
     symbolDesc = SymbolDesc.plain.copy(
-      hardKeywords = Set("val", "def")
+      hardKeywords = Set("val", "def", "if", "then", "else")
     ),
     spaceDesc = SpaceDesc.plain.copy(
       space = Basic(parsley.character.isWhitespace(_))
@@ -55,8 +55,8 @@ object Lexer {
   val lexer = new parsley.token.Lexer(desc)
 
   object definition {
-    val defLexer = lexer.lexeme.symbol.apply("def")
-    val valLexer = lexer.lexeme.symbol.apply("val")
+    val defLexer = lexer.lexeme.symbol("def")
+    val valLexer = lexer.lexeme.symbol("val")
     val id = lexer.lexeme.names.identifier
   }
 
@@ -84,6 +84,12 @@ object Lexer {
     val or = lexer.lexeme.symbol("||")
 
     val eq = lexer.lexeme.symbol("==")
+  }
+
+  object expression {
+    val ifLexer = lexer.lexeme.symbol("if")
+    val thenLexer = lexer.lexeme.symbol("then")
+    val elseLexer = lexer.lexeme.symbol("else")
   }
 
   object misc {
