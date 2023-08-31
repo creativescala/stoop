@@ -82,4 +82,7 @@ object Expression {
           operator.or.as(Or.apply)
         )
     )
+
+  lazy val parser: Parsley[Expr] =
+    lexer.fully(expr)
 }

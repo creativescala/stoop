@@ -53,4 +53,7 @@ object Arithmetic {
           operator.sub.as(Sub.apply)
         )
     )
+
+  lazy val parser: Parsley[Expr] =
+    lexer.fully(expr)
 }
