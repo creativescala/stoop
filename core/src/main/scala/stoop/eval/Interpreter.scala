@@ -18,6 +18,7 @@ package stoop.eval
 
 import parsley.Result
 import stoop.parse.Parser
+import scala.io.StdIn
 
 /** An `Interpreter` accepts programs represented as an abstract syntax tree of
   * type `Program` and evaluates them to produce values of type `Value`.
@@ -32,4 +33,13 @@ trait Interpreter[Program, Value](parser: Parser[Program]) {
   /** Parses a program from a `String`, and evaluates that program. */
   def run(program: String): Result[String, Value] =
     parser.parse(program).map(eval)
+
+  /** Run a read-eval-print loop, which reads input from standard input,
+    * evaluates it, and prints the result.
+    */
+  def repl: Unit = {
+    print("> ")
+    println(run(StdIn.readLine()))
+    repl
+  }
 }

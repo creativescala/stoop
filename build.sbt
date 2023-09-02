@@ -68,6 +68,7 @@ lazy val root = project
   .in(file("."))
   .settings(moduleName := "stoop")
   .aggregate(core)
+  .dependsOn(core)
 
 lazy val core = project
   .in(file("core"))
