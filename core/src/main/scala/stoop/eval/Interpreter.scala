@@ -19,9 +19,17 @@ package stoop.eval
 import parsley.Result
 import stoop.parse.Parser
 
+/** An `Interpreter` accepts programs represented as an abstract syntax tree of
+  * type `Program` and evaluates them to produce values of type `Value`.
+  */
 trait Interpreter[Program, Value](parser: Parser[Program]) {
+
+  /** The core method of an interpreter, produces values of type `Value` given a
+    * program.of type `Program`.
+    */
   def eval(program: Program): Value
 
+  /** Parses a program from a `String`, and evaluates that program. */
   def run(program: String): Result[String, Value] =
     parser.parse(program).map(eval)
 }
