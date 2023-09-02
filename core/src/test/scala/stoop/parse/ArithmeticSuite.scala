@@ -20,35 +20,35 @@ class ArithmeticSuite extends ParserSuite {
   import Arithmetic.*
 
   test("integer literals") {
-    assertSuccess(expr.parse("1"), Integer(1))
-    assertSuccess(expr.parse("10"), Integer(10))
-    assertSuccess(expr.parse("99"), Integer(99))
-    assertSuccess(expr.parse("999"), Integer(999))
-    assertSuccess(expr.parse("12345"), Integer(12345))
-    assertSuccess(expr.parse("-1"), Integer(-1))
-    assertSuccess(expr.parse("-12345"), Integer(-12345))
+    assertSuccess(parser.parse("1"), Integer(1))
+    assertSuccess(parser.parse("10"), Integer(10))
+    assertSuccess(parser.parse("99"), Integer(99))
+    assertSuccess(parser.parse("999"), Integer(999))
+    assertSuccess(parser.parse("12345"), Integer(12345))
+    assertSuccess(parser.parse("-1"), Integer(-1))
+    assertSuccess(parser.parse("-12345"), Integer(-12345))
   }
 
   test("addition and subtraction") {
-    assertSuccess(expr.parse("1 + 99"), Add(Integer(1), Integer(99)))
-    assertSuccess(expr.parse("10 - 32"), Sub(Integer(10), Integer(32)))
+    assertSuccess(parser.parse("1 + 99"), Add(Integer(1), Integer(99)))
+    assertSuccess(parser.parse("10 - 32"), Sub(Integer(10), Integer(32)))
     assertSuccess(
-      expr.parse("99 - 45 + 8"),
+      parser.parse("99 - 45 + 8"),
       Add(Sub(Integer(99), Integer(45)), Integer(8))
     )
     assertSuccess(
-      expr.parse("999 + 7 - 3"),
+      parser.parse("999 + 7 - 3"),
       Sub(Add(Integer(999), Integer(7)), Integer(3))
     )
   }
 
   test("operator precedence") {
     assertSuccess(
-      expr.parse("1 + 9 * 7"),
+      parser.parse("1 + 9 * 7"),
       Add(Integer(1), Mul(Integer(9), Integer(7)))
     )
     assertSuccess(
-      expr.parse("1 * 9 + 7"),
+      parser.parse("1 * 9 + 7"),
       Add(Mul(Integer(1), Integer(9)), Integer(7))
     )
   }

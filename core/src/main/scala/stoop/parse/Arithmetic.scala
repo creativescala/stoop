@@ -38,22 +38,21 @@ object Arithmetic {
 
   import Lexer.*
 
-  lazy val expr: Parsley[Expr] =
-    precedence(
-      Atoms(
-        literal.integer.map(Integer.apply),
-        misc.openParen *> expr.map(Parens.apply) <* misc.closeParen
-      ) :+
-        SOps(InfixL)(
-          operator.mul.as(Mul.apply),
-          operator.div.as(Div.apply)
+  object parser extends Parser[Expr] {
+    lazy val expr: Parsley[Expr] =
+      precedence(
+        Atoms(
+          literal.integer.map(Integer.apply),
+          misc.openParen *> expr.map(Parens.apply) <* misc.closeParen
         ) :+
-        SOps(InfixL)(
-          operator.add.as(Add.apply),
-          operator.sub.as(Sub.apply)
-        )
-    )
-
-  lazy val parser: Parsley[Expr] =
-    lexer.fully(expr)
+          SOps(InfixL)(
+            operator.mul.as(Mul.apply),
+            operator.div.as(Div.apply)
+          ) :+
+          SOps(InfixL)(
+            operator.add.as(Add.apply),
+            operator.sub.as(Sub.apply)
+          )
+      )
+  }
 }

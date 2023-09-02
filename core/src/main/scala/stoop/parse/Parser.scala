@@ -14,20 +14,19 @@
  * limitations under the License.
  */
 
-package stoop.eval
+package stoop.parse
 
-import stoop.parse.{Arithmetic => Parser}
+import parsley.Parsley
+import parsley.Result
 
-object Arithmetic extends Interpreter[Parser.Expr, Int](Parser.parser) {
-  import Parser.*
+trait Parser[Program] {
+  import Lexer.*
 
-  def eval(expr: Expr): Int =
-    expr match {
-      case Add(l, r)      => eval(l) + eval(r)
-      case Sub(l, r)      => eval(l) - eval(r)
-      case Mul(l, r)      => eval(l) * eval(r)
-      case Div(l, r)      => eval(l) / eval(r)
-      case Integer(value) => value
-      case Parens(expr)   => eval(expr)
-    }
+  def expr: Parsley[Program]
+
+  lazy val parser: Parsley[Program] =
+    lexer.fully(expr)
+
+  def parse(input: String): Result[String, Program] =
+    parser.parse(input)
 }

@@ -21,11 +21,11 @@ class ConditionalSuite extends ParserSuite {
 
   test("conditionals") {
     assertSuccess(
-      expr.parse("if 1 < 2 then true else false"),
+      parser.parse("if 1 < 2 then true else false"),
       If(Lt(Integer(1), Integer(2)), Bool(true), Bool(false))
     )
     assertSuccess(
-      expr.parse("if if 3 + 2 < 4 then false else true then true else false"),
+      parser.parse("if if 3 + 2 < 4 then false else true then true else false"),
       If(
         If(
           Lt(Add(Integer(3), Integer(2)), Integer(4)),
@@ -39,18 +39,18 @@ class ConditionalSuite extends ParserSuite {
   }
 
   test("boolean literals") {
-    assertSuccess(expr.parse("true"), Bool(true))
-    assertSuccess(expr.parse("false"), Bool(false))
+    assertSuccess(parser.parse("true"), Bool(true))
+    assertSuccess(parser.parse("false"), Bool(false))
   }
 
   test("inequalities") {
-    assertSuccess(expr.parse("1 < 99"), Lt(Integer(1), Integer(99)))
-    assertSuccess(expr.parse("10 > 32"), Gt(Integer(10), Integer(32)))
-    assertSuccess(expr.parse("1 <= 99"), LtEq(Integer(1), Integer(99)))
-    assertSuccess(expr.parse("10 >= 32"), GtEq(Integer(10), Integer(32)))
+    assertSuccess(parser.parse("1 < 99"), Lt(Integer(1), Integer(99)))
+    assertSuccess(parser.parse("10 > 32"), Gt(Integer(10), Integer(32)))
+    assertSuccess(parser.parse("1 <= 99"), LtEq(Integer(1), Integer(99)))
+    assertSuccess(parser.parse("10 >= 32"), GtEq(Integer(10), Integer(32)))
   }
 
   test("equality") {
-    assertSuccess(expr.parse("1 == 10"), Eq(Integer(1), Integer(10)))
+    assertSuccess(parser.parse("1 == 10"), Eq(Integer(1), Integer(10)))
   }
 }

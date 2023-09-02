@@ -16,18 +16,12 @@
 
 package stoop.eval
 
-import stoop.parse.{Arithmetic => Parser}
+import parsley.Result
+import stoop.parse.Parser
 
-object Arithmetic extends Interpreter[Parser.Expr, Int](Parser.parser) {
-  import Parser.*
+trait Interpreter[Program, Value](parser: Parser[Program]) {
+  def eval(program: Program): Value
 
-  def eval(expr: Expr): Int =
-    expr match {
-      case Add(l, r)      => eval(l) + eval(r)
-      case Sub(l, r)      => eval(l) - eval(r)
-      case Mul(l, r)      => eval(l) * eval(r)
-      case Div(l, r)      => eval(l) / eval(r)
-      case Integer(value) => value
-      case Parens(expr)   => eval(expr)
-    }
+  def run(program: String): Result[String, Value] =
+    parser.parse(program).map(eval)
 }

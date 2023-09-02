@@ -20,18 +20,18 @@ class ExpressionSuite extends ParserSuite {
   import Expression.*
 
   test("boolean literals") {
-    assertSuccess(expr.parse("true"), Bool(true))
-    assertSuccess(expr.parse("false"), Bool(false))
+    assertSuccess(parser.parse("true"), Bool(true))
+    assertSuccess(parser.parse("false"), Bool(false))
   }
 
   test("inequalities") {
-    assertSuccess(expr.parse("1 < 99"), Lt(Integer(1), Integer(99)))
-    assertSuccess(expr.parse("10 > 32"), Gt(Integer(10), Integer(32)))
-    assertSuccess(expr.parse("1 <= 99"), LtEq(Integer(1), Integer(99)))
-    assertSuccess(expr.parse("10 >= 32"), GtEq(Integer(10), Integer(32)))
+    assertSuccess(parser.parse("1 < 99"), Lt(Integer(1), Integer(99)))
+    assertSuccess(parser.parse("10 > 32"), Gt(Integer(10), Integer(32)))
+    assertSuccess(parser.parse("1 <= 99"), LtEq(Integer(1), Integer(99)))
+    assertSuccess(parser.parse("10 >= 32"), GtEq(Integer(10), Integer(32)))
   }
 
   test("equality") {
-    assertSuccess(expr.parse("1 == 10"), Eq(Integer(1), Integer(10)))
+    assertSuccess(parser.parse("1 == 10"), Eq(Integer(1), Integer(10)))
   }
 }

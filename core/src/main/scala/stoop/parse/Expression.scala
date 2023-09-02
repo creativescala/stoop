@@ -49,40 +49,39 @@ object Expression {
   final case class Bool(value: scala.Boolean) extends Atom
   final case class Parens(expr: Expr) extends Atom
 
-  import Lexer.*
-  lazy val expr: Parsley[Expr] =
-    precedence(
-      Atoms(
-        literal.integer.map(Integer.apply),
-        literal.boolean.map {
-          case "true"  => Bool(true)
-          case "false" => Bool(false)
-        },
-        misc.openParen *> expr.map(Parens.apply) <* misc.closeParen
-      ) :+
-        SOps(InfixL)(
-          operator.mul.as(Mul.apply),
-          operator.div.as(Div.apply)
+  object parser extends Parser[Expr] {
+    import Lexer.*
+    lazy val expr: Parsley[Expr] =
+      precedence(
+        Atoms(
+          literal.integer.map(Integer.apply),
+          literal.boolean.map {
+            case "true"  => Bool(true)
+            case "false" => Bool(false)
+          },
+          misc.openParen *> expr.map(Parens.apply) <* misc.closeParen
         ) :+
-        SOps(InfixL)(
-          operator.add.as(Add.apply),
-          operator.sub.as(Sub.apply)
-        ) :+
-        SOps(InfixL)(
-          operator.gtEq.as(GtEq.apply),
-          operator.ltEq.as(LtEq.apply),
-          operator.eq.as(Eq.apply)
-        ) :+
-        SOps(InfixL)(
-          operator.gt.as(Gt.apply),
-          operator.lt.as(Lt.apply)
-        ) :+
-        SOps(InfixL)(
-          operator.and.as(And.apply),
-          operator.or.as(Or.apply)
-        )
-    )
-
-  lazy val parser: Parsley[Expr] =
-    lexer.fully(expr)
+          SOps(InfixL)(
+            operator.mul.as(Mul.apply),
+            operator.div.as(Div.apply)
+          ) :+
+          SOps(InfixL)(
+            operator.add.as(Add.apply),
+            operator.sub.as(Sub.apply)
+          ) :+
+          SOps(InfixL)(
+            operator.gtEq.as(GtEq.apply),
+            operator.ltEq.as(LtEq.apply),
+            operator.eq.as(Eq.apply)
+          ) :+
+          SOps(InfixL)(
+            operator.gt.as(Gt.apply),
+            operator.lt.as(Lt.apply)
+          ) :+
+          SOps(InfixL)(
+            operator.and.as(And.apply),
+            operator.or.as(Or.apply)
+          )
+      )
+  }
 }
