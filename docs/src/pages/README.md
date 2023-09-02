@@ -1,3 +1,3 @@
 # Stoop
 
-Stoop is a simple Scala-like language.
+Stoop is series of parsers and interpreters that build towards a simple Scala-like language.
