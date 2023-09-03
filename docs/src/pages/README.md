@@ -9,3 +9,5 @@ The languages progress as follows:
 2. `Expression` adds booleans and inequalities.
 
 3. `Conditional` adds conditional (`if`)  expressions.
+
+4. `Local` adds local definitions, using the syntax `let <name> = <expr> in <expr>`.
