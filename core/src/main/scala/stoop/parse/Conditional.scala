@@ -16,9 +16,9 @@
 
 package stoop.parse
 
-import cats.syntax.all._
+import cats.syntax.all.*
 import parsley.Parsley
-import parsley.cats.instances._
+import parsley.cats.instances.*
 import parsley.expr.Atoms
 import parsley.expr.InfixL
 import parsley.expr.SOps

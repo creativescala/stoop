@@ -18,6 +18,7 @@ package stoop.eval
 
 import parsley.Result
 import stoop.parse.Parser
+
 import scala.io.StdIn
 
 /** An `Interpreter` accepts programs represented as an abstract syntax tree of
