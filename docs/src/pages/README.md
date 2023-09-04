@@ -8,7 +8,7 @@ Stoop is a series of parsers and interpreters that incrementally build a simple 
 
 3. `Conditional` adds conditional (`if`)  expressions. The syntax is `if <expr> then <expr> else <expr>`. The `else` branch is mandatory.
 
-4. `Local` adds local definitions, using the syntax `let <name> = <expr> in <expr>`.
+4. `Local` adds local definitions, using the syntax `let <name> = <expr> in <expr>`. (There is no simple equivalent to this construct in Scala 3, so we use the same syntax as OCaml.)
 
 
 ## Code Structure
