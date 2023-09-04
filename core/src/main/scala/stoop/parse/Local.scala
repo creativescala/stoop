@@ -77,13 +77,13 @@ object Local {
     lazy val expr: Parsley[Expr] =
       precedence(
         Atoms(
-          name.map(Name.apply),
           literal.integer.map(Integer.apply),
           literal.boolean.map {
             case "true"  => Bool(true)
             case "false" => Bool(false)
           },
           parenExpr,
+          name.map(Name.apply),
           conditionalExpr,
           letExpr
         ) :+
