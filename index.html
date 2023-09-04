@@ -32,22 +32,24 @@
     <div id="content">
         <main class="content">
             <h1 id="stoop" class="title">Stoop</h1>
-            <p>Stoop is a series of parsers and interpreters that incrementally builds a simple Scala-like language.</p>
-            <p>The languages progress as follows:</p>
+            <p>Stoop is a series of parsers and interpreters that incrementally build a simple programming language with syntax (and semantics) as close as possible to Scala 3. The languages follow the progression in <a href="https://cs.brown.edu/~sk/">Shriram Krishnamurthi&#39;s</a> book <a href="https://www.plai.org/">Programming Languages: Application and Interpretation</a>:</p>
             <ol class="arabic">
               <li>
                 <p><code>Arithmetic</code>, the first language, works with simple integer arithmetic.</p>
               </li>
               <li>
-                <p><code>Expression</code> adds booleans and inequalities.</p>
+                <p><code>Expression</code> adds boolean values and logical operators, inequalities, and equality.</p>
               </li>
               <li>
-                <p><code>Conditional</code> adds conditional (<code>if</code>)  expressions.</p>
+                <p><code>Conditional</code> adds conditional (<code>if</code>)  expressions. The syntax is <code>if &lt;expr&gt; then &lt;expr&gt; else &lt;expr&gt;</code>. The <code>else</code> branch is mandatory.</p>
               </li>
               <li>
                 <p><code>Local</code> adds local definitions, using the syntax <code>let &lt;name&gt; = &lt;expr&gt; in &lt;expr&gt;</code>.</p>
               </li>
             </ol>
+            
+            <h2 id="code-structure" class="section">Code Structure</h2>
+            <p>The implementation is divided into parsers and interpreters. The intention is that parsers will be supplied to students, and they will implement the interpreters. The parsers are in the <code>parse</code> package, and the interpreters in the <code>eval</code> package. Each package defines an interface (<code>Parsers</code> and <code>Interpreter</code>, respectively) that implementations should implement. There are also test cases.</p>
             
         </main>
         <footer>Creative Scala is copyright Noel Welsh</footer>
