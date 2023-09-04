@@ -29,7 +29,7 @@ object Expression
       case i: Int => i
       case other =>
         throw new java.lang.ClassCastException(
-          "Expected an integer value but found the value ${other}"
+          s"Expected an integer value but found the value ${other}"
         )
     }
 
@@ -39,7 +39,7 @@ object Expression
       case b: Boolean => b
       case other =>
         throw new java.lang.ClassCastException(
-          "Expected a boolean value but found the value ${other}"
+          s"Expected a boolean value but found the value ${other}"
         )
     }
 
