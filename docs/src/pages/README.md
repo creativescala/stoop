@@ -10,10 +10,13 @@ Stoop is a series of parsers and interpreters that incrementally build a simple 
 
 4. `Local` adds local definitions, using the syntax `let <name> = <expr> in <expr>`. (There is no simple equivalent to this construct in Scala 3, so we use the same syntax as OCaml.)
 
+5. `Function` adds function definitions (lambda expressions) and function application. The syntax for function definitions is the same as Scala (`(<param>) => <expr>`) except functions can only have a single parameter. Function application is the usual `f(x)` syntax.
 
 ## Code Structure
 
-The implementation is divided into parsers and interpreters. The intention is that parsers will be supplied to students, and they will implement the interpreters. The parsers are in the `parse` package, and the interpreters in the `eval` package. Each package defines an interface (`Parsers` and `Interpreter`, respectively) that implementations should implement. There are also test cases.
+The implementation is divided into parsers and interpreters. The parsers are in the `parse` package, and the interpreters in the `eval` package. Each package defines an interface (`Parsers` and `Interpreter`, respectively) that implementations should implement. There are also test cases.
+
+The intention is that parsers will be supplied to students, and they will implement the interpreters. 
 
 [plai]: https://www.plai.org/
 [sk]: https://cs.brown.edu/~sk/
