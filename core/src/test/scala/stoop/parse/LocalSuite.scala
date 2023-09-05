@@ -29,4 +29,9 @@ class LocalSuite extends ParserSuite {
       Let("x", Integer(3), Let("y", Integer(2), Mul(Name("x"), Name("y"))))
     )
   }
+
+  test("name") {
+    assertSuccess(parser.parse("truthy"), Name("truthy"))
+    assertSuccess(parser.parse("falsey"), Name("falsey"))
+  }
 }

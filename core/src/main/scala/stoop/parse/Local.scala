@@ -74,14 +74,20 @@ object Local {
     lazy val parenExpr: Parsley[Atom] =
       misc.openParen *> expr.map(Parens.apply) <* misc.closeParen
 
+    lazy val integerLiteral: Parsley[Atom] =
+      literal.integer.map(Integer.apply)
+
+    lazy val booleanLiteral: Parsley[Atom] =
+      literal.`true`.as(Bool(true)).orElse(literal.`false`.as(Bool(false)))
+
     lazy val expr: Parsley[Expr] =
       precedence(
         Atoms(
-          literal.integer.map(Integer.apply),
-          literal.boolean.map {
-            case "true"  => Bool(true)
-            case "false" => Bool(false)
-          },
+          integerLiteral,
+          // This parser can partially match an identifier that starts with a
+          // substring of "true" or "false" (e.g. "falsey") so we must be
+          // prepared to backtrack if we consume input but fail.
+          Parsley.attempt(booleanLiteral),
           parenExpr,
           name.map(Name.apply),
           conditionalExpr,

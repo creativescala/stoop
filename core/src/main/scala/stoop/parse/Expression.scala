@@ -55,10 +55,8 @@ object Expression {
       precedence(
         Atoms(
           literal.integer.map(Integer.apply),
-          literal.boolean.map {
-            case "true"  => Bool(true)
-            case "false" => Bool(false)
-          },
+          literal.`true`.as(Bool(true)),
+          literal.`false`.as(Bool(false)),
           misc.openParen *> expr.map(Parens.apply) <* misc.closeParen
         ) :+
           SOps(InfixL)(

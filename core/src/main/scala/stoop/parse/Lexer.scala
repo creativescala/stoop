@@ -28,7 +28,8 @@ object Lexer {
         identifierLetter = Basic(_.isLetterOrDigit)
       ),
     symbolDesc = SymbolDesc.plain.copy(
-      hardKeywords = Set("let", "in", "val", "def", "if", "then", "else")
+      hardKeywords =
+        Set("let", "in", "val", "def", "if", "then", "else", "true", "false")
     ),
     spaceDesc = SpaceDesc.plain.copy(
       space = Basic(parsley.character.isWhitespace(_))
@@ -65,9 +66,8 @@ object Lexer {
   object literal {
     val integer = lexer.lexeme.numeric.integer.decimal32
     val string = lexer.lexeme.text.string.fullUtf16
-    val boolean = lexer.lexeme(character.string("true")) | lexer.lexeme(
-      character.string("false")
-    )
+    val `true` = lexer.lexeme.symbol("true")
+    val `false` = lexer.lexeme.symbol("false")
   }
 
   val name = lexer.lexeme.names.identifier
@@ -101,5 +101,6 @@ object Lexer {
     val closeParen = lexer.lexeme.symbol.closingParen
     val openBrace = lexer.lexeme.symbol.openBrace
     val closeBrace = lexer.lexeme.symbol.closingBrace
+    val arrow = lexer.lexeme.symbol("=>")
   }
 }
