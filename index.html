@@ -46,10 +46,14 @@
               <li>
                 <p><code>Local</code> adds local definitions, using the syntax <code>let &lt;name&gt; = &lt;expr&gt; in &lt;expr&gt;</code>. (There is no simple equivalent to this construct in Scala 3, so we use the same syntax as OCaml.)</p>
               </li>
+              <li>
+                <p><code>Function</code> adds function definitions (lambda expressions) and function application. The syntax for function definitions is the same as Scala (<code>(&lt;param&gt;) =&gt; &lt;expr&gt;</code>) except functions can only have a single parameter. Function application is the usual <code>f(x)</code> syntax.</p>
+              </li>
             </ol>
             
             <h2 id="code-structure" class="section">Code Structure</h2>
-            <p>The implementation is divided into parsers and interpreters. The intention is that parsers will be supplied to students, and they will implement the interpreters. The parsers are in the <code>parse</code> package, and the interpreters in the <code>eval</code> package. Each package defines an interface (<code>Parsers</code> and <code>Interpreter</code>, respectively) that implementations should implement. There are also test cases.</p>
+            <p>The implementation is divided into parsers and interpreters. The parsers are in the <code>parse</code> package, and the interpreters in the <code>eval</code> package. Each package defines an interface (<code>Parsers</code> and <code>Interpreter</code>, respectively) that implementations should implement. There are also test cases.</p>
+            <p>The intention is that parsers will be supplied to students, and they will implement the interpreters. </p>
             
         </main>
         <footer>Creative Scala is copyright Noel Welsh</footer>
