@@ -91,6 +91,8 @@ Your mission, should you choose to accept it, is to implement interpreters for e
 
 We strongly recommend you read [PLAI][plai] as you work through the implementations. PLAI has many insights about the design space of programming languages. While learning how to implement simple interpreters is useful, it's learning about programming languages that is likely to be the most important knowledge you'll get from this exercise. If you fail to read PLAI you'll miss out on much of this.
 
+If you really get stuck, you can find solutions on the `solution` branch.
+
 
 ## Where Next?
 
