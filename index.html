@@ -109,7 +109,6 @@
 //      ^&quot;&quot;&quot;
 // )</span></code></pre>
             <p>If you want to explore extending the parsers, they are built using the <a href="https://j-mie6.github.io/parsley/latest/">Parsley</a> Scala library.</p>
-            <p>The parsers are in the <code>parse</code> package, and the interpreters in the <code>eval</code> package. Each package defines an interface (<code>Parsers</code> and <code>Interpreter</code>, respectively) that implementations should implement. There are also test cases in the usual location (<code>src/test/scala</code>).</p>
             
             <h3 id="interpreters" class="section">Interpreters</h3>
             <p>The intention is that you will implement the interpreters. They should all implement the <code>Interpreter</code> trait. Doing so will allow your implementations to work with the tests we&#39;ve created.</p>
@@ -123,6 +122,7 @@
               <li><a href="https://www.plai.org/">PLAI</a>.</li>
             </ol>
             <p>We strongly recommend you read <a href="https://www.plai.org/">PLAI</a> as you work through the implementations. PLAI has many insights about the design space of programming languages. While learning how to implement simple interpreters is useful, it&#39;s learning about programming languages that is likely to be the most important knowledge you&#39;ll get from this exercise. If you fail to read PLAI you&#39;ll miss out on much of this.</p>
+            <p>If you really get stuck, you can find solutions on the <code>solution</code> branch.</p>
             
             <h2 id="where-next" class="section">Where Next?</h2>
             <p>If you finish the five interpreters and want to take things further, here are some suggestions:</p>
