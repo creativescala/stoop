@@ -74,9 +74,6 @@ Arithmetic.parser.parse("1 ? 2")
 If you want to explore extending the parsers, they are built using the [Parsley][parsley] Scala library.
 
 
-The parsers are in the `parse` package, and the interpreters in the `eval` package. Each package defines an interface (`Parsers` and `Interpreter`, respectively) that implementations should implement. There are also test cases in the usual location (`src/test/scala`).
-
-
 ### Interpreters
 
 The intention is that you will implement the interpreters. They should all implement the `Interpreter` trait. Doing so will allow your implementations to work with the tests we've created.
