@@ -32,7 +32,8 @@
     <div id="content">
         <main class="content">
             <h1 id="stoop" class="title">Stoop</h1>
-            <p>Stoop is a series of parsers and interpreters that incrementally build a simple programming language with syntax (and semantics) as close as possible to Scala 3. The languages follow the progression in <a href="https://cs.brown.edu/~sk/">Shriram Krishnamurthi&#39;s</a> book <a href="https://www.plai.org/">Programming Languages: Application and Interpretation</a>:</p>
+            <p>Stoop is a series of parsers and interpreters that incrementally build a simple programming language with syntax (and semantics) that closely resemble Scala 3. Stoop is intended for educational purposes. The languages are simple, and the implementations are slow.</p>
+            <p>The languages follow the progression in <a href="https://cs.brown.edu/~sk/">Shriram Krishnamurthi&#39;s</a> book <a href="https://www.plai.org/">Programming Languages: Application and Interpretation</a> (PLAI):</p>
             <ol class="arabic">
               <li>
                 <p><code>Arithmetic</code>, the first language, works with simple integer arithmetic, with the operators <code>+</code>, <code>-</code>, <code>/</code>, <code>*</code> and parenthesized expressions.</p>
@@ -47,13 +48,95 @@
                 <p><code>Local</code> adds local definitions, using the syntax <code>let &lt;name&gt; = &lt;expr&gt; in &lt;expr&gt;</code>. There is no simple equivalent to this construct in Scala 3, so we use the same syntax as OCaml.</p>
               </li>
               <li>
-                <p><code>Function</code> adds function definitions (lambda expressions) and function application. The syntax for function definitions is the same as Scala (<code>(&lt;param&gt;) =&gt; &lt;expr&gt;</code>) except functions can only have a single parameter and parentheses around the parameter are mandatory. Function application is the usual <code>f(x)</code> syntax.</p>
+                <p><code>Function</code> adds functions (lambda expressions) and function application. The syntax for functions is the same as Scala (<code>(&lt;param&gt;) =&gt; &lt;expr&gt;</code>) except functions can only have a single parameter and there are mandatory parentheses around the parameter. Function application is the usual <code>f(x)</code> syntax.</p>
               </li>
             </ol>
+            <p>The rest of this document gives guidance for students who want to implement interpreters for these languages. It starts by describing the structure of the project and the code, then gives some advice on tackling the project, and finishes with some recommended extensions for those who want more challenge.</p>
+            
+            <h2 id="project-structure" class="section">Project Structure</h2>
+            <p>The project structure is a bit more complicated than you may be used to. The sbt project (in <code>build.sbt</code>) defines several sub-projects:</p>
+            <ul>
+              <li><code>core</code>, which contains the code you&#39;ll work with;</li>
+              <li><code>docs</code>, which contains this documentation; and</li>
+              <li>the <code>root</code> project, which aggregates and depends on <code>core</code>.</li>
+            </ul>
+            <p>From your point of view, the only relevant detail is that the code you&#39;ll work with is all within the <code>core</code> directory. So <code>core/src/main/scala</code> for code, and <code>core/src/test/scala</code> for tests.</p>
+            <p>You don&#39;t need to change into the <code>core</code> sub-project within sbt. Any commands you run on the default <code>root</code> project (such as <code>compile</code>, or <code>test</code>) will also run on the <code>core</code> sub-project.</p>
+            <p>You may want to use the <code>build</code> sbt command, which in addition to compiling and testing the code, will format it, add missing copyright headers, and more. It&#39;s not necessary to use this command, but you might be interested in how professional code is developed; this is the same command used in all the Creative Scala projects to perform basic checks on the code.</p>
             
             <h2 id="code-structure" class="section">Code Structure</h2>
-            <p>The implementation is divided into parsers and interpreters. The parsers are in the <code>parse</code> package, and the interpreters in the <code>eval</code> package. Each package defines an interface (<code>Parsers</code> and <code>Interpreter</code>, respectively) that implementations should implement. There are also test cases.</p>
-            <p>The intention is that parsers will be supplied to students, and they will implement the interpreters. </p>
+            <p>The implementation is divided into parsers and interpreters. Each lives in their own package: the parsers in the <code>parse</code> package and the interpreters in the <code>eval</code> package. (An evaluator is another word for an interpreter.)</p>
+            
+            <h3 id="parsers" class="section">Parsers</h3>
+            <p>The parsers take <code>String</code> input, such as <code>&quot;1 + 2&quot;</code> and turn it into an algebraic data type that we can manipulate in code. Here&#39;s an example doing just that.</p>
+            <pre><code class="nohighlight"><span class="keyword">import</span><span> </span><span class="identifier">stoop</span><span>.</span><span class="identifier">parse</span><span>.*
+
+</span><span class="type-name">Arithmetic</span><span>.</span><span class="identifier">parser</span><span>.</span><span class="identifier">parse</span><span>(</span><span class="string-literal">&quot;1 + 2&quot;</span><span>)
+</span><span class="comment">// res0: Result[String, Expr] = Success(
+//   x = Add(l = Integer(value = 1), r = Integer(value = 2))
+// )</span></code></pre>
+            <p>In the world of programming languages this representation is usually called an abstract syntax tree.</p>
+            <p>You&#39;ll notice that there is a parser for each language described above. The parsers become more complex as the languages increase in complexity, but you don&#39;t need to worry about how they work. There are two things you do need to know:</p>
+            <ol class="arabic">
+              <li>
+                <p>They all define an <code>Expr</code> algebraic data type to represent programs. The definition of <code>Expr</code> is a little bit more complicated than you may be used to, but the end result is just an algebraic data type.</p>
+              </li>
+              <li>
+                <p>They all contain an object called <code>parser</code> that has a method <code>parse</code> that takes a <code>String</code> input and produces an <code>Expr</code> (wrapped in a <code>Result</code>; parsing can fail).</p>
+              </li>
+            </ol>
+            <p>See the <code>Parser</code> trait for a little bit more detail.</p>
+            <p>Here are some examples, showing the parsers for different languages.</p>
+            <pre><code class="nohighlight"><span class="type-name">Conditional</span><span>.</span><span class="identifier">parser</span><span>.</span><span class="identifier">parse</span><span>(</span><span class="string-literal">&quot;1 &lt; 2&quot;</span><span>)
+</span><span class="comment">// res1: Result[String, Expr] = Success(
+//   x = Lt(l = Integer(value = 1), r = Integer(value = 2))
+// )
+</span><span>
+</span><span class="type-name">Function</span><span>.</span><span class="identifier">parser</span><span>.</span><span class="identifier">parse</span><span>(</span><span class="string-literal">&quot;(x) =&gt; x + 2&quot;</span><span>)
+</span><span class="comment">// res2: Result[String, Expr] = Success(
+//   x = Lambda(
+//     param = &quot;x&quot;,
+//     body = Add(l = Name(name = &quot;x&quot;), r = Integer(value = 2))
+//   )
+// )</span></code></pre>
+            <p>If the syntax is incorrect, the output offers some useful hints.</p>
+            <pre><code class="nohighlight"><span class="type-name">Arithmetic</span><span>.</span><span class="identifier">parser</span><span>.</span><span class="identifier">parse</span><span>(</span><span class="string-literal">&quot;1 ? 2&quot;</span><span>)
+</span><span class="comment">// res3: Result[String, Expr] = Failure(
+//    = &quot;&quot;&quot;(line 1, column 3):
+//   unexpected &quot;?&quot;
+//   expected &quot;*&quot;, &quot;+&quot;, &quot;-&quot;, &quot;/&quot;, or end of input
+//   &gt;1 ? 2
+//      ^&quot;&quot;&quot;
+// )</span></code></pre>
+            <p>If you want to explore extending the parsers, they are built using the <a href="https://j-mie6.github.io/parsley/latest/">Parsley</a> Scala library.</p>
+            <p>The parsers are in the <code>parse</code> package, and the interpreters in the <code>eval</code> package. Each package defines an interface (<code>Parsers</code> and <code>Interpreter</code>, respectively) that implementations should implement. There are also test cases in the usual location (<code>src/test/scala</code>).</p>
+            
+            <h3 id="interpreters" class="section">Interpreters</h3>
+            <p>The intention is that you will implement the interpreters. They should all implement the <code>Interpreter</code> trait. Doing so will allow your implementations to work with the tests we&#39;ve created.</p>
+            <p>The <code>Interpreter</code> trait only requires you implement one method: <code>eval</code>. It takes an input of type <code>Program</code> (which will the <code>Expr</code> type from whichever parser you are using), and will produce a result of type <code>Value</code>. What concrete type you should use for <code>Value</code>? It depends on the language you&#39;re implementing. For <code>Arithmetic</code> you can use <code>Int</code>. For the later languages until <code>Function</code>, we can use Scala 3&#39;s <a href="https://docs.scala-lang.org/scala3/book/types-union.html">union types</a> to return <code>Int | Boolean</code>. For <code>Function</code> we need add a representation of functions to the <code>Value</code> type.</p>
+            
+            <h2 id="challenges" class="section">Challenges</h2>
+            <p>Your mission, should you choose to accept it, is to implement interpreters for each parser. To guide you, you have the following:</p>
+            <ol class="arabic">
+              <li>the text above;</li>
+              <li>the test cases; and</li>
+              <li><a href="https://www.plai.org/">PLAI</a>.</li>
+            </ol>
+            <p>We strongly recommend you read <a href="https://www.plai.org/">PLAI</a> as you work through the implementations. PLAI has many insights about the design space of programming languages. While learning how to implement simple interpreters is useful, it&#39;s learning about programming languages that is likely to be the most important knowledge you&#39;ll get from this exercise. If you fail to read PLAI you&#39;ll miss out on much of this.</p>
+            
+            <h2 id="where-next" class="section">Where Next?</h2>
+            <p>If you finish the five interpreters and want to take things further, here are some suggestions:</p>
+            <ol class="arabic">
+              <li>
+                <p>Read further in PLAI, and create new languages that extend <code>Function</code> with the feature you encounter. PLAI discusses objects, types, macros, and more.</p>
+              </li>
+              <li>
+                <p>PLAI lists several books you may read next, to go further in programming language theory.</p>
+              </li>
+              <li>
+                <p>You might want to focus on implementation techniques, for which there are two paths you could choose. The first path is to continue working with interpreters, in which case <a href="https://craftinginterpreters.com/">Crafting Interpreters</a> is a good starting point. The first part of that book covers the implementation technique we&#39;re used: a tree-walking interpreter. The second part looks at more efficient bytecode interpreters. For a different approach, see the <a href="https://www.graalvm.org/latest/graalvm-as-a-platform/language-implementation-framework/">Graal Truffle</a> framework. The other path is to implement a compiler. Here <a href="https://wphomes.soic.indiana.edu/jsiek/">Jeremy Siek&#39;s</a> book, <em>Essential of Compilation</em>, is a good introduction. PDFs are available from <a href="https://wphomes.soic.indiana.edu/jsiek/">his homepage</a> or you can buy a printed copy.</p>
+              </li>
+            </ol>
             
         </main>
         <footer>Creative Scala is copyright Noel Welsh</footer>
