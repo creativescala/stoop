@@ -35,19 +35,19 @@
             <p>Stoop is a series of parsers and interpreters that incrementally build a simple programming language with syntax (and semantics) as close as possible to Scala 3. The languages follow the progression in <a href="https://cs.brown.edu/~sk/">Shriram Krishnamurthi&#39;s</a> book <a href="https://www.plai.org/">Programming Languages: Application and Interpretation</a>:</p>
             <ol class="arabic">
               <li>
-                <p><code>Arithmetic</code>, the first language, works with simple integer arithmetic.</p>
+                <p><code>Arithmetic</code>, the first language, works with simple integer arithmetic, with the operators <code>+</code>, <code>-</code>, <code>/</code>, <code>*</code> and parenthesized expressions.</p>
               </li>
               <li>
-                <p><code>Expression</code> adds boolean values and logical operators, inequalities, and equality.</p>
+                <p><code>Expression</code> adds boolean values and logical operators, inequalities, and equality. It adds boolean literals <code>true</code> and <code>false</code>, and operators <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>, <code>==</code>, <code>&amp;&amp;</code> and <code>||</code>.</p>
               </li>
               <li>
-                <p><code>Conditional</code> adds conditional (<code>if</code>)  expressions. The syntax is <code>if &lt;expr&gt; then &lt;expr&gt; else &lt;expr&gt;</code>. The <code>else</code> branch is mandatory.</p>
+                <p><code>Conditional</code> adds conditional (<code>if</code>)  expressions. The syntax is the same as Scala 3: <code>if &lt;expr&gt; then &lt;expr&gt; else &lt;expr&gt;</code>. Unlike in Scala, the <code>else</code> branch is mandatory.</p>
               </li>
               <li>
-                <p><code>Local</code> adds local definitions, using the syntax <code>let &lt;name&gt; = &lt;expr&gt; in &lt;expr&gt;</code>. (There is no simple equivalent to this construct in Scala 3, so we use the same syntax as OCaml.)</p>
+                <p><code>Local</code> adds local definitions, using the syntax <code>let &lt;name&gt; = &lt;expr&gt; in &lt;expr&gt;</code>. There is no simple equivalent to this construct in Scala 3, so we use the same syntax as OCaml.</p>
               </li>
               <li>
-                <p><code>Function</code> adds function definitions (lambda expressions) and function application. The syntax for function definitions is the same as Scala (<code>(&lt;param&gt;) =&gt; &lt;expr&gt;</code>) except functions can only have a single parameter. Function application is the usual <code>f(x)</code> syntax.</p>
+                <p><code>Function</code> adds function definitions (lambda expressions) and function application. The syntax for function definitions is the same as Scala (<code>(&lt;param&gt;) =&gt; &lt;expr&gt;</code>) except functions can only have a single parameter and parentheses around the parameter are mandatory. Function application is the usual <code>f(x)</code> syntax.</p>
               </li>
             </ol>
             
